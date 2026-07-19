@@ -1,7 +1,6 @@
 {
   "name": "hisabkitab-mobile",
   "main": "index.ts",
-  "packageManager": "yarn@4.17.1",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
     "@hookform/resolvers": "^5.4.0",

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "HisabKitab",
-    "slug": "hisabkitab-mobile",
+    "slug": "yujan",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,6 +20,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
+      "versionCode": 1,
       "predictiveBackGestureEnabled": false,
       "package": "com.hisabkitab.mobile"
     },
@@ -27,6 +28,12 @@
       "expo-secure-store",
       "@react-native-community/datetimepicker",
       "expo-status-bar"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "17051f4f-9999-4c26-b885-90ee7a579d99"
+      }
+    },
+    "owner": "yujanrais-team"
   }
 }
