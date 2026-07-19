@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import DashboardScreen from '../screens/dashboard/DashboardScreen';
+import ProtectedTabs from "./ProtectedTabs";
 
 
 export type ProtectedStackParamList ={
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator<ProtectedStackParamList>();
 
 const ProtectedStack = () => (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name = "Dashboard" component={DashboardScreen}/>
+        <Stack.Screen name = "Dashboard" component={ProtectedTabs}/>
     </Stack.Navigator>
 )
 

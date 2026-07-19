@@ -1,4 +1,3 @@
-// Single expense item from the backend
 export interface ExpenseUser {
   _id: string;
   name: string;
@@ -18,7 +17,6 @@ export interface Expense {
   updatedAt: string;
 }
 
-// data.summary.userTotals entry from GET /expense
 export interface UserTotal {
   userId: string;
   name: string;
@@ -26,13 +24,11 @@ export interface UserTotal {
   totalAmount: number;
 }
 
-// data.summary from GET /expense
 export interface ExpenseSummary {
   grandTotal: number;
   userTotals: UserTotal[];
 }
 
-// Full data shape from GET /expense
 export interface ExpenseListResponse {
   items: Expense[];
   summary: ExpenseSummary;
@@ -49,7 +45,7 @@ export interface CreateExpenseDto {
   amount: number;
   note?: string;
   date?: string;
-  image?: File;   // actual File for upload; string URL when editing
+  image?: File;
 }
 
 export interface UpdateExpenseDto {

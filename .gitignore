@@ -1,41 +1,59 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# dependencies
+# ── Dependencies ──────────────────────────────────────────────────────────────
 node_modules/
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.pnp.*
 
-# Expo
+# ── Expo ──────────────────────────────────────────────────────────────────────
 .expo/
 dist/
 web-build/
 expo-env.d.ts
 
-# Native
+# ── Native build output ───────────────────────────────────────────────────────
+/ios
+/android
 .kotlin/
 *.orig.*
+
+# ── Signing / certificates ────────────────────────────────────────────────────
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+*.pem
 
-# Metro
+# ── Metro ─────────────────────────────────────────────────────────────────────
 .metro-health-check*
 
-# debug
+# ── Environment variables ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.staging
+
+# ── Debug / logs ──────────────────────────────────────────────────────────────
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+*.log
+.expo/dev/logs/
 
-# macOS
+# ── OS artifacts ──────────────────────────────────────────────────────────────
 .DS_Store
-*.pem
+Thumbs.db
 
-# local env files
-.env*.local
-
-# typescript
+# ── TypeScript ────────────────────────────────────────────────────────────────
 *.tsbuildinfo
 
-# generated native folders
-/ios
-/android
+# ── IDE / editor ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
