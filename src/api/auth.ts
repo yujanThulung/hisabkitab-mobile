@@ -1,6 +1,5 @@
 import api from "./axios";
 import axios from "axios";
-import { useAuthStore } from "../store/authStore";
 import type {
   LoginPayload,
   RegisterPayload,
@@ -23,17 +22,7 @@ export const register = async (payload: RegisterPayload) => {
 };
 
 export const logout = async (refreshToken?: string | null) => {
-  const accessToken = useAuthStore.getState().accessToken;
-  await axios.post(
-    `${process.env.EXPO_PUBLIC_API_URL}/auth/logout`,
-    { refreshToken },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-      },
-    }
-  );
+  await api.post("/auth/logout", { refreshToken });
 };
 
 export const refreshAccessToken = async (
