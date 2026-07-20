@@ -30,6 +30,7 @@
       "expo-status-bar"
     ],
     "extra": {
+      "apiUrl": "https://hisabkitab-gp9z.onrender.com/api",
       "eas": {
         "projectId": "17051f4f-9999-4c26-b885-90ee7a579d99"
       }
