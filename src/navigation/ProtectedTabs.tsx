@@ -98,11 +98,22 @@ const ProtectedTabs = () => {
           component={PurchasesScreen}
           options={{
             tabBarLabel: () => null,
-            tabBarButton: () => (
+          tabBarButton: () => (
+            <TouchableOpacity
+              onPress={() => setAddModalVisible(true)}
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 60,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <TouchableOpacity
                 onPress={() => setAddModalVisible(true)}
                 style={{
-                  top: -18,
                   width: 56,
                   height: 56,
                   borderRadius: 28,
@@ -118,7 +129,8 @@ const ProtectedTabs = () => {
               >
                 <Ionicons name="add" size={30} color="#fff" />
               </TouchableOpacity>
-            ),
+            </TouchableOpacity>
+          ),
           }}
         />
         <Tab.Screen name="Settlement" component={SettlementScreen} />

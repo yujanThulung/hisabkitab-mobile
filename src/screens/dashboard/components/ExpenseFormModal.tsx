@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Modal,
   View,
@@ -7,13 +7,16 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
-  ScrollView,
   KeyboardAvoidingView,
+  Keyboard,
   Platform,
+  Animated,
+  EmitterSubscription,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 
 import api from '../../../api/axios';
@@ -38,6 +41,31 @@ const ExpenseFormModal = ({ visible, onClose, onSuccess, editingExpense }: Expen
   const [submitting, setSubmitting] = useState(false);
   const [image, setImage] = useState<RNImageAsset | null>(null);
   const isEditing = !!editingExpense;
+  const insets = useSafeAreaInsets();
+  const keyboardHeight = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const onShow = (e: any) => {
+      Animated.timing(keyboardHeight, {
+        toValue: e.endCoordinates.height,
+        duration: 250,
+        useNativeDriver: false,
+      }).start();
+    };
+    const onHide = () => {
+      Animated.timing(keyboardHeight, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
+    };
+    const showSub: EmitterSubscription = Keyboard.addListener('keyboardDidShow', onShow);
+    const hideSub: EmitterSubscription = Keyboard.addListener('keyboardDidHide', onHide);
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, [keyboardHeight]);
 
   const {
     control,
@@ -124,20 +152,26 @@ const ExpenseFormModal = ({ visible, onClose, onSuccess, editingExpense }: Expen
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent onRequestClose={resetAndClose}>
-      <View className="flex-1 bg-black/40 justify-end">
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          <View className="bg-white rounded-t-3xl max-h-[85%]">
-            <View className="flex-row items-center justify-between px-5 py-4 border-b border-border">
-              <Text className="text-base font-bold text-textPrimary">
-                {isEditing ? 'Edit Expense' : 'Add Expense'}
-              </Text>
-              <TouchableOpacity onPress={resetAndClose}>
-                <Ionicons name="close" size={24} color="#8c9196" />
-              </TouchableOpacity>
-            </View>
+      <Modal visible={visible} animationType="slide" transparent onRequestClose={resetAndClose}>
+        <View className="flex-1 bg-black/40 justify-end">
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            className="w-full justify-end"
+          >
+            <Animated.View
+              style={{ marginBottom: keyboardHeight }}
+              className="bg-white rounded-t-3xl max-h-[100%]"
+            >
+              <View className="flex-row items-center justify-between px-5 py-4 border-b border-border">
+                <Text className="text-base font-bold text-textPrimary">
+                  {isEditing ? 'Edit Expense' : 'Add Expense'}
+                </Text>
+                <TouchableOpacity onPress={resetAndClose}>
+                  <Ionicons name="close" size={24} color="#8c9196" />
+                </TouchableOpacity>
+              </View>
 
-            <ScrollView className="px-5 pt-4" contentContainerStyle={{ paddingBottom: 24 }}>
+              <View className="px-5 pt-4" style={{ paddingBottom: 20 + insets.bottom }}>
               <Text className="text-sm font-semibold text-textPrimary mb-1.5">Title</Text>
               <Controller
                 control={control}
@@ -243,8 +277,8 @@ const ExpenseFormModal = ({ visible, onClose, onSuccess, editingExpense }: Expen
                   </Text>
                 )}
               </TouchableOpacity>
-            </ScrollView>
-          </View>
+            </View>
+          </Animated.View>
         </KeyboardAvoidingView>
       </View>
     </Modal>

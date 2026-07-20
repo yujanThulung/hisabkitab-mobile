@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -51,13 +52,19 @@ const LoginScreen = () => {
   return (
     <KeyboardAvoidingView
       className="flex-1 bg-authBg"
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
     >
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: 24 }}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: 24, paddingVertical: 24 }}
         keyboardShouldPersistTaps="handled"
       >
         <View className="items-center mb-10">
+          <Image
+            source={require('../../../assets/icon.png')}
+            className="w-20 h-20 mb-4"
+            resizeMode="contain"
+          />
           <Text className="text-3xl font-bold text-primary">HisabKitab</Text>
           <Text className="text-sm text-textSecondary mt-1.5 text-center">
             Track shared expenses, settle instantly
@@ -80,7 +87,7 @@ const LoginScreen = () => {
                 <Ionicons name="person-outline" size={20} color="#8c9196" />
                 <TextInput
                   className="flex-1 text-[15px] text-textPrimary"
-                  placeholder="you@example.com or 98XXXXXXXX"
+                  placeholder="Email or phone number"
                   placeholderTextColor="#8c9196"
                   autoCapitalize="none"
                   keyboardType="email-address"
@@ -108,7 +115,7 @@ const LoginScreen = () => {
                 <Ionicons name="lock-closed-outline" size={20} color="#8c9196" />
                 <TextInput
                   className="flex-1 text-[15px] text-textPrimary"
-                  placeholder="Enter your password"
+                  placeholder="Password"
                   placeholderTextColor="#8c9196"
                   secureTextEntry={!showPassword}
                   onBlur={onBlur}
